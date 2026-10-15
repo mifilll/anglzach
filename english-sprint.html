@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#10151f">
+<meta name="description" content="English Sprint — интерактивная подготовка по английскому языку для технического вуза: юниты 4–6, лексика, грамматика и вопросы к зачёту.">
+<title>English Sprint — учи английский каждый день</title>
+<style>
+:root{
+ --bg:#10151f;--bg2:#151d2a;--panel:#1a2433;--panel2:#202d3e;--line:#303d50;
+ --text:#f2f6fc;--muted:#9eabc0;--green:#b5f36c;--green2:#8ed74b;--mint:#6ee7bf;
+ --red:#ff7e87;--yellow:#ffd166;--blue:#8aa7ff;--purple:#c9a6ff;
+ --shadow:0 18px 55px rgba(0,0,0,.25);--radius:22px
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at 10% -10%,rgba(86,129,96,.18),transparent 40%),radial-gradient(ellipse at 100% 0%,rgba(108,127,191,.13),transparent 35%),var(--bg);color:var(--text);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;min-height:100vh}
+button,input,select{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--green);outline-offset:3px}
+button:disabled{opacity:.45;cursor:not-allowed}
+a{color:var(--green)}
+.wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+header{position:sticky;top:0;z-index:20;background:rgba(16,21,31,.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.06)}
+.topbar{min-height:78px;display:flex;align-items:center;gap:22px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--text);flex:0 0 auto}
+.logo{width:42px;height:42px;border-radius:15px;background:var(--green);display:grid;place-items:center;color:#172216;font-weight:1000;font-size:19px;box-shadow:0 5px 22px rgba(181,243,108,.16)}
+.brandname{font-size:17px;font-weight:950;letter-spacing:.08em;line-height:1.1}
+.brandtag{font-size:10px;letter-spacing:.16em;color:var(--muted);margin-top:4px;font-weight:750}
+.nav{display:flex;gap:5px;align-items:center;flex:1;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav button{white-space:nowrap;border:0;color:var(--muted);background:transparent;padding:11px 13px;border-radius:13px;font-weight:750}
+.nav button:hover,.nav button.active{background:var(--panel2);color:var(--text)}
+.nav button.active{box-shadow:inset 0 -2px var(--green)}
+.stats-top{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+.pill{display:flex;align-items:center;gap:6px;padding:8px 10px;border:1px solid var(--line);background:rgba(255,255,255,.025);border-radius:13px;font-weight:850;font-size:12px;white-space:nowrap}
+.pill.xp{color:var(--green)}.pill.streak{color:var(--yellow)}
+main{padding:28px 0 70px}
+.view{display:none}.view.active{display:block;animation:fadein .2s ease-out}
+@keyframes fadein{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+.grid{display:grid;gap:18px}
+.two{grid-template-columns:minmax(0,1.5fr) minmax(280px,.85fr)}
+.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.panel{background:linear-gradient(145deg,rgba(255,255,255,.035),transparent 65%),var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.panel.soft{box-shadow:none;background:rgba(255,255,255,.025)}
+.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:10px;font-weight:900;color:var(--green);margin-bottom:8px}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:clamp(29px,4vw,47px);line-height:1.07;letter-spacing:-.04em;margin-bottom:14px}
+h2{font-size:24px;letter-spacing:-.025em;line-height:1.16;margin-bottom:10px}
+h3{font-size:17px;line-height:1.25;margin-bottom:8px}
+p{color:var(--muted);margin-bottom:14px}
+.lead{font-size:16px;max-width:640px}
+.small{font-size:12px;color:var(--muted)}
+.muted{color:var(--muted)}
+.hero{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(240px,.7fr);gap:24px;align-items:center;overflow:hidden;position:relative}
+.hero:after{content:"";position:absolute;width:260px;height:260px;border:1px solid rgba(181,243,108,.1);border-radius:50%;right:-90px;top:-110px;pointer-events:none}
+.hero-right{display:grid;place-items:center;min-height:180px;position:relative}
+.mascot{width:154px;height:154px;border-radius:44px;display:grid;place-items:center;background:linear-gradient(145deg,#d7ff9a,#80d84e);color:#1b2a18;font-size:72px;box-shadow:0 22px 45px rgba(142,215,75,.18);transform:rotate(4deg);position:relative}
+.mascot:after{content:"LET'S GO!";position:absolute;bottom:-10px;right:-35px;background:#e6f7ff;color:#23344a;font-size:10px;letter-spacing:.09em;font-weight:950;padding:7px 10px;border-radius:9px;transform:rotate(-8deg);box-shadow:0 5px 15px #0003}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.btn{border:0;border-radius:14px;padding:12px 17px;font-weight:900;transition:transform .12s,filter .12s;display:inline-flex;justify-content:center;align-items:center;gap:8px;text-decoration:none}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.06)}
+.btn.primary{background:var(--green);color:#182519;box-shadow:0 7px 18px rgba(181,243,108,.12)}
+.btn.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
+.btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}
+.btn.danger{background:rgba(255,126,135,.12);color:var(--red);border:1px solid rgba(255,126,135,.24)}
+.btn.tiny{padding:8px 11px;font-size:12px;border-radius:11px}
+.btn.full{width:100%}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin:28px 0 15px}
+.section-head h2{margin:0}
+.progress-track{height:8px;border-radius:20px;background:#0e131b;overflow:hidden;border:1px solid rgba(255,255,255,.035)}
+.progress-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--green2),var(--mint));width:0;transition:width .3s ease}
+.daily-row{display:flex;align-items:center;gap:15px}
+.daily-icon{width:50px;height:50px;flex:0 0 50px;border-radius:16px;background:rgba(181,243,108,.12);display:grid;place-items:center;font-size:24px}
+.daily-grow{flex:1;min-width:0}
+.statnum{font-size:26px;font-weight:950;letter-spacing:-.04em}
+.mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.mini-stat{padding:15px;border-radius:16px;background:rgba(255,255,255,.035);border:1px solid var(--line)}
+.mini-stat .big{font-size:23px;font-weight:950;line-height:1.1;margin-bottom:5px}
+.unit-card{position:relative;overflow:hidden;min-height:224px;padding:21px;border-radius:22px;border:1px solid var(--line);background:linear-gradient(150deg,rgba(255,255,255,.07),transparent 70%),var(--panel)}
+.unit-card:before{content:attr(data-num);position:absolute;right:12px;top:-21px;font-size:110px;line-height:1;font-weight:1000;letter-spacing:-.1em;color:rgba(255,255,255,.035);pointer-events:none}
+.unit-card .uniticon{font-size:27px;margin-bottom:13px;display:block}
+.unit-card h3{font-size:20px;max-width:280px}
+.unit-meta{display:flex;gap:7px;flex-wrap:wrap;margin:16px 0}
+.tag{font-size:10px;letter-spacing:.04em;font-weight:900;border-radius:9px;padding:5px 8px;background:rgba(255,255,255,.06);color:var(--muted);border:1px solid rgba(255,255,255,.04)}
+.tag.green{background:rgba(181,243,108,.1);color:var(--green);border-color:rgba(181,243,108,.16)}
+.lesson-list{display:grid;gap:10px}
+.lesson-node{display:flex;gap:13px;align-items:center;padding:13px;background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:17px}
+.node-icon{width:43px;height:43px;border-radius:14px;display:grid;place-items:center;font-size:19px;background:var(--panel2);flex:0 0 auto}
+.node-content{flex:1;min-width:0}
+.node-content b{display:block;font-size:14px}
+.node-content small{display:block;color:var(--muted);margin-top:3px;font-size:11px}
+.node-check{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);color:var(--muted);font-weight:900}
+.node-check.done{background:var(--green);color:#13200f;border-color:var(--green)}
+.searchbar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 18px}
+.field{min-width:0;background:#111823;border:1px solid var(--line);color:var(--text);padding:12px 13px;border-radius:13px;width:100%}
+.searchbar .field{flex:1;min-width:180px}
+.select{min-width:150px;width:auto}
+.word-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.word-card{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:16px;min-width:0}
+.word-card .word-en{font-size:16px;font-weight:900;padding-right:23px;overflow-wrap:anywhere}
+.word-card .word-ru{color:var(--muted);margin-top:8px;min-height:32px}
+.word-card .word-ipa{font-size:10px;color:#76849b;margin-top:8px;overflow-wrap:anywhere}
+.word-actions{display:flex;gap:6px;margin-top:10px}
+.icon-btn{border:1px solid var(--line);background:rgba(255,255,255,.035);color:var(--muted);width:32px;height:32px;border-radius:10px;display:inline-grid;place-items:center}
+.icon-btn:hover{color:var(--green);border-color:rgba(181,243,108,.35)}
+.icon-btn.fav{color:var(--yellow);border-color:rgba(255,209,102,.3)}
+.oral-list{display:grid;gap:10px}
+.oral-card{border:1px solid var(--line);border-radius:17px;background:var(--panel);padding:17px}
+.oral-top{display:flex;align-items:start;gap:10px}
+.oral-num{display:grid;place-items:center;width:30px;height:30px;flex:0 0 30px;border-radius:10px;background:var(--panel2);color:var(--green);font-weight:950;font-size:12px}
+.oral-q{font-weight:850;flex:1}
+.sample{margin-top:13px;border-left:3px solid var(--green);padding:12px 13px;background:rgba(181,243,108,.055);border-radius:0 12px 12px 0;color:#d6e2ef}
+.sample .small{margin-bottom:6px;display:block;color:var(--green)}
+.grammar-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.grammar-card{padding:20px;border:1px solid var(--line);border-radius:20px;background:var(--panel);display:flex;flex-direction:column}
+.grammar-card .g-icon{font-size:27px;margin-bottom:13px}
+.grammar-card .formula{border-radius:12px;background:#111823;border:1px solid var(--line);padding:10px;font-weight:850;font-size:13px;margin:9px 0;color:var(--green)}
+.rule-block{border-bottom:1px solid var(--line);padding:13px 0}
+.rule-block:last-child{border-bottom:0}
+.rule-block b{display:block;margin-bottom:4px;color:var(--text)}
+.rule-block p{margin:0;font-size:13px}
+.empty{padding:28px;text-align:center;border:1px dashed var(--line);border-radius:17px;color:var(--muted)}
+.modal{position:fixed;inset:0;z-index:60;background:rgba(5,8,14,.82);backdrop-filter:blur(15px);display:none;align-items:center;justify-content:center;padding:16px}
+.modal.open{display:flex}
+.lesson-shell{width:min(760px,100%);max-height:min(900px,calc(100dvh - 32px));overflow:auto;background:var(--bg2);border:1px solid #3a4b61;border-radius:26px;box-shadow:0 28px 100px rgba(0,0,0,.5);padding:clamp(17px,3vw,30px)}
+.lesson-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.close-btn{width:39px;height:39px;display:grid;place-items:center;border-radius:13px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:19px}
+.lesson-progress{flex:1}
+.lesson-progress .progress-track{height:9px}
+.hearts{font-weight:900;color:var(--red);white-space:nowrap}
+.lesson-kicker{color:var(--green);font-size:11px;font-weight:950;letter-spacing:.14em;text-transform:uppercase;margin-bottom:9px}
+.lesson-question{font-size:clamp(23px,4vw,34px);font-weight:950;line-height:1.2;letter-spacing:-.035em;margin:12px 0 18px;overflow-wrap:anywhere}
+.prompt-translation{color:var(--muted);font-size:13px;margin-bottom:16px}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.option{background:var(--panel);border:1px solid var(--line);border-bottom-width:3px;border-radius:15px;padding:14px;text-align:left;color:var(--text);font-weight:750;min-height:59px;overflow-wrap:anywhere}
+.option:hover{background:var(--panel2);border-color:#53637a}
+.option.selected{border-color:var(--blue);background:rgba(138,167,255,.1)}
+.option.correct{border-color:var(--green);background:rgba(181,243,108,.09)}
+.option.wrong{border-color:var(--red);background:rgba(255,126,135,.09)}
+.feedback{display:none;margin-top:15px;padding:13px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
+.feedback.show{display:block}
+.feedback.good{border-color:rgba(181,243,108,.35)}.feedback.bad{border-color:rgba(255,126,135,.3)}
+.feedback h3{margin:0 0 4px;font-size:15px}
+.feedback p{font-size:13px;margin:0;color:var(--muted)}
+.lesson-footer{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:22px;flex-wrap:wrap}
+.type-answer{display:flex;gap:9px;align-items:center}
+.type-answer input{flex:1}
+.speaking-answer{display:none;margin:12px 0 18px}
+.speaking-answer.show{display:block}
+.self-rate{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.lesson-finish{text-align:center;padding:16px 3px}
+.finish-badge{width:86px;height:86px;border-radius:27px;background:rgba(181,243,108,.13);border:1px solid rgba(181,243,108,.3);display:grid;place-items:center;font-size:43px;margin:0 auto 17px}
+.xp-award{font-size:30px;font-weight:1000;color:var(--green);margin:12px 0}
+.breakline{height:1px;background:var(--line);margin:18px 0}
+.tip{padding:14px 16px;border-radius:15px;background:rgba(138,167,255,.07);border:1px solid rgba(138,167,255,.17);color:#c5d2f7;font-size:13px}
+.progress-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.footer-note{margin:30px 0 0;padding-top:16px;border-top:1px solid rgba(255,255,255,.06);font-size:11px;color:#748198;text-align:center}
+@media(max-width:980px){
+ .topbar{gap:12px;flex-wrap:wrap;padding:10px 0}
+ .nav{order:3;flex:0 0 100%;padding-bottom:2px}
+ .stats-top{margin-left:auto}
+ .hero{grid-template-columns:minmax(0,1.3fr) minmax(170px,.7fr)}
+ .word-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .grammar-list{grid-template-columns:1fr}
+}
+@media(max-width:720px){
+ .wrap{padding:0 14px}
+ main{padding-top:18px}
+ .hero{grid-template-columns:1fr}
+ .hero-right{display:none}
+ .panel{padding:18px;border-radius:19px}
+ .two,.three{grid-template-columns:1fr}
+ .mini-stats{grid-template-columns:repeat(3,1fr)}
+ .mini-stat{padding:12px}
+ .mini-stat .big{font-size:20px}
+ .unit-card{min-height:200px}
+ .word-grid{grid-template-columns:1fr 1fr;gap:9px}
+ .word-card{padding:13px}
+ .word-card .word-en{font-size:14px}
+ .word-card .word-ru{font-size:12px}
+ .oral-card{padding:14px}
+ .section-head{align-items:start;flex-direction:column;margin:24px 0 13px}
+ .stats-top .pill{padding:7px 8px;font-size:11px}
+ .brandname{font-size:15px}
+ .brandtag{font-size:9px}
+ .topbar{min-height:auto}
+ .nav button{padding:9px 11px;font-size:12px}
+ .options{grid-template-columns:1fr}
+ .lesson-shell{border-radius:22px;padding:16px;max-height:calc(100dvh - 18px)}
+ .lesson-header{margin-bottom:16px}
+ .lesson-footer .btn{flex:1}
+ .progress-stats{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:385px){
+ .word-grid{grid-template-columns:1fr}
+ .brandtag{display:none}
+ .stats-top{gap:5px}
+ .stats-top .pill{font-size:10px}
+}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap topbar">
+  <a class="brand" href="#" aria-label="English Sprint — главная" onclick="showView('home');return false">
+   <div class="logo">ES</div><div><div class="brandname">ENGLISH SPRINT</div><div class="brandtag">SMALL STEPS. REAL PROGRESS.</div></div>
+  </a>
+  <nav class="nav" aria-label="Главная навигация">
+   <button class="active" data-view="home">⌂ Главная</button>
+   <button data-view="path">✦ Путь</button>
+   <button data-view="vocab">▦ Слова</button>
+   <button data-view="speaking">◉ Speaking</button>
+   <button data-view="grammar">Aa Грамматика</button>
+   <button data-view="progress">↗ Прогресс</button>
+  </nav>
+  <div class="stats-top">
+   <div class="pill streak">🔥 <span id="topStreak">0</span></div>
+   <div class="pill xp">✦ <span id="topXp">0 XP</span></div>
+  </div>
+ </div>
+</header>
+
+<main class="wrap">
+<section class="view active" id="homeView">
+ <div class="panel hero">
+  <div>
+   <div class="eyebrow">Твой английский · твой темп</div>
+   <h1>Прокачай английский<br>по одному уроку.</h1>
+   <p class="lead">Лексика из твоих Unit 4–6, грамматика, короткие задания и вопросы для устного ответа. Учись как в игре — набирай XP, закрывай уроки и возвращайся к сложным словам.</p>
+   <div class="actions">
+    <button class="btn primary" onclick="startLesson(4,'words')">▶ Начать урок</button>
+    <button class="btn secondary" onclick="showView('path')">Посмотреть путь →</button>
+   </div>
+  </div>
+  <div class="hero-right"><div class="mascot" aria-hidden="true">🦉</div></div>
+ </div>
+ <div class="grid two" style="margin-top:18px">
+  <div class="panel">
+   <div class="section-head" style="margin:0 0 14px">
+    <div><div class="eyebrow">Ежедневная цель</div><h2 style="margin:0">Ещё немного — и готово</h2></div>
+    <div class="statnum"><span id="todayXp">0</span><span class="small"> / 30 XP</span></div>
+   </div>
+   <div class="progress-track"><div class="progress-fill" id="dailyFill"></div></div>
+   <p class="small" style="margin:9px 0 0">Даже 5–10 минут каждый день лучше, чем один длинный марафон.</p>
+   <div class="breakline"></div>
+   <div class="daily-row">
+    <div class="daily-icon">🎯</div>
+    <div class="daily-grow"><b>Быстрый старт</b><div class="small">10 заданий по лексике Technology</div></div>
+    <button class="btn tiny primary" onclick="startLesson(4,'words')">Учить</button>
+   </div>
+  </div>
+  <div class="panel">
+   <div class="eyebrow">Твоя статистика</div><h2>Ты уже на пути</h2>
+   <div class="mini-stats">
+    <div class="mini-stat"><div class="big" id="homeWords">0</div><div class="small">слов изучено</div></div>
+    <div class="mini-stat"><div class="big" id="homeLessons">0</div><div class="small">уроков пройдено</div></div>
+    <div class="mini-stat"><div class="big" id="homeAccuracy">—</div><div class="small">точность</div></div>
+   </div>
+   <div class="breakline"></div>
+   <div class="daily-row"><div class="daily-icon" style="background:rgba(255,209,102,.1)">🔥</div><div class="daily-grow"><b><span id="homeStreak">0</span> дней подряд</b><div class="small">Поддерживай серию ежедневными уроками</div></div></div>
+  </div>
+ </div>
+ <div class="section-head"><div><div class="eyebrow">Продолжай обучение</div><h2>Твой путь</h2></div><button class="btn tiny secondary" onclick="showView('path')">Все юниты →</button></div>
+ <div class="grid three" id="homeUnits"></div>
+ <div class="section-head"><div><div class="eyebrow">Повтори перед зачётом</div><h2>Тренируй то, что важно</h2></div></div>
+ <div class="grid three">
+  <div class="panel soft"><div class="daily-icon" style="margin-bottom:12px">🧠</div><h3>Проверь слова</h3><p class="small">Выбирай перевод или вводи его сам, чтобы запоминать активнее.</p><button class="btn secondary full" onclick="showView('vocab')">Открыть слова</button></div>
+  <div class="panel soft"><div class="daily-icon" style="margin-bottom:12px">🎤</div><h3>Готовь устный ответ</h3><p class="small">81 вопрос по темам инноваций, глобальных проблем и трудоустройства.</p><button class="btn secondary full" onclick="showView('speaking')">Практиковать speaking</button></div>
+  <div class="panel soft"><div class="daily-icon" style="margin-bottom:12px">🧩</div><h3>Разбери грамматику</h3><p class="small">Participles, Conditionals и Complex Subject с понятными примерами.</p><button class="btn secondary full" onclick="showView('grammar')">Повторить правила</button></div>
+ </div>
+ <div class="footer-note">Сделано для самостоятельной подготовки · Unit 4, Unit 5, Unit 6 · Прогресс хранится в этом браузере</div>
+</section>
+
+<section class="view" id="pathView">
+ <div class="eyebrow">Learning path</div><h1>Путь обучения</h1>
+ <p class="lead">Проходи уроки по порядку или сразу выбирай тему, которая нужна к зачёту. Каждый блок можно повторять сколько угодно раз.</p>
+ <div id="pathUnits" class="grid" style="gap:18px"></div>
+ <div class="tip" style="margin-top:18px">💡 Подсказка: сначала пройди Vocabulary, потом Grammar, а после — Speaking. В конце проверь себя в Unit Challenge.</div>
+</section>
+
+<section class="view" id="vocabView">
+ <div class="eyebrow">Vocabulary bank</div><h1>Слова и выражения</h1>
+ <p class="lead">Лексика из твоих материалов. Нажми на динамик, чтобы услышать произношение, на звёздочку — чтобы сохранить слово, или закрой перевод для самопроверки.</p>
+ <div class="searchbar">
+  <input id="wordSearch" class="field" type="search" placeholder="Найти слово или перевод…" autocomplete="off">
+  <select id="wordUnit" class="field select"><option value="all">Все юниты</option><option value="4">Unit 4 · Technology</option><option value="5">Unit 5 · Global Issues</option><option value="6">Unit 6 · Employment</option><option value="fav">★ Избранное</option></select>
+  <select id="wordCategory" class="field select"><option value="all">Все части речи</option><option value="verb">Глаголы</option><option value="adjective">Прилагательные</option><option value="noun">Существительные</option></select>
+ </div>
+ <div class="section-head" style="margin-top:10px"><h2 id="wordCountLabel">Словарь</h2><button class="btn tiny secondary" onclick="startLesson(currentUnitFilter(),'words')">▶ Тренировка</button></div>
+ <div class="word-grid" id="wordGrid"></div>
+</section>
+
+<section class="view" id="speakingView">
+ <div class="eyebrow">Speaking arena</div><h1>Подготовка к устному</h1>
+ <p class="lead">Вопросы из твоих файлов и короткие примерные ответы на уровне примерно B1. Прочитай вопрос, попробуй ответить вслух, затем открой пример. Вопросы, связанные с видео, отмечены отдельно — сверяй такие детали с видео преподавателя.</p>
+ <div class="searchbar">
+  <input id="oralSearch" class="field" type="search" placeholder="Поиск вопроса…">
+  <select id="oralUnit" class="field select"><option value="all">Все юниты</option><option value="4">Unit 4 · Innovations</option><option value="5">Unit 5 · Global Issues</option><option value="6">Unit 6 · Employment</option></select>
+  <select id="oralTopic" class="field select"><option value="all">Все темы</option></select>
+ </div>
+ <div class="tip" style="margin-bottom:16px">🎤 Тактика ответа: <b>Answer → Reason → Example.</b> Скажи прямой ответ, добавь одну причину и закончи примером. Лучше простые правильные предложения, чем длинные фразы, в которых легко запутаться.</div>
+ <div class="oral-list" id="oralList"></div>
+</section>
+
+<section class="view" id="grammarView">
+ <div class="eyebrow">Grammar lab</div><h1>Грамматика без паники</h1>
+ <p class="lead">Три блока, которые совпадают с грамматическими темами твоих Unit 4–6. Прочитай правило и сразу закрепи его в мини-тесте.</p>
+ <div class="grammar-list" id="grammarCards"></div>
+ <div class="section-head"><div><div class="eyebrow">Quick practice</div><h2>Проверь себя</h2></div></div>
+ <div class="panel">
+  <div class="daily-row"><div class="daily-icon">🧩</div><div class="daily-grow"><b>Смешанный грамматический тест</b><div class="small">15 коротких заданий по трём правилам</div></div><button class="btn primary" onclick="startLesson('all','grammar')">Начать</button></div>
+ </div>
+</section>
+
+<section class="view" id="progressView">
+ <div class="eyebrow">Your progress</div><h1>Твой прогресс</h1>
+ <p class="lead">Результаты сохраняются локально на этом устройстве. Если очистить данные Safari, прогресс может сброситься.</p>
+ <div class="panel">
+  <div class="progress-stats">
+   <div class="mini-stat"><div class="big" id="pXp">0</div><div class="small">всего XP</div></div>
+   <div class="mini-stat"><div class="big" id="pStreak">0 🔥</div><div class="small">серия дней</div></div>
+   <div class="mini-stat"><div class="big" id="pLessons">0</div><div class="small">завершено уроков</div></div>
+   <div class="mini-stat"><div class="big" id="pAccuracy">—</div><div class="small">точность ответов</div></div>
+  </div>
+  <div class="breakline"></div>
+  <div class="section-head" style="margin:0 0 12px"><h2>Пройденные уроки</h2></div>
+  <div id="completedList" class="lesson-list"></div>
+  <div class="breakline"></div>
+  <div class="section-head" style="margin:0 0 12px"><h2>Сложные слова</h2><button class="btn tiny secondary" onclick="startMistakeReview()">Повторить ошибки</button></div>
+  <div id="mistakeList" class="small"></div>
+  <div class="actions"><button class="btn ghost" onclick="exportProgress()">Экспорт прогресса</button><button class="btn danger" onclick="resetProgress()">Сбросить прогресс</button></div>
+ </div>
+</section>
+</main>
+
+<div class="modal" id="lessonModal" role="dialog" aria-modal="true" aria-labelledby="lessonTitle">
+ <div class="lesson-shell">
+  <div class="lesson-header">
+   <button class="close-btn" onclick="closeLesson()" aria-label="Закрыть урок">×</button>
+   <div class="lesson-progress"><div class="progress-track"><div class="progress-fill" id="lessonFill"></div></div><div class="small" style="margin-top:5px" id="lessonStep">Вопрос 1</div></div>
+   <div class="hearts">♥ <span id="heartsCount">5</span></div>
+  </div>
+  <div id="lessonBody"></div>
+ </div>
+</div>
+
+<script>
+const VOCAB = [{"unit":4,"category":"verb","en":"to accept an apprenticeship","ru":"согласиться на стажировку","ipa":"tə əkˈsept ən əˈprentɪʃɪp"},{"unit":4,"category":"verb","en":"to be involved in something","ru":"участвовать в чём-либо; быть вовлечённым во что-либо","ipa":"tə biː rɪsˈpɒnsəbl fɔː"},{"unit":4,"category":"verb","en":"to claim","ru":"утверждать; заявлять","ipa":"tə  kleɪm"},{"unit":4,"category":"verb","en":"to explore","ru":"исследовать","ipa":"tə ɪkˈsplɔː(r)"},{"unit":4,"category":"verb","en":"to generate attention","ru":"привлекать внимание","ipa":"tə ˈdʒenəreɪt əˈtenʃn"},{"unit":4,"category":"verb","en":"to honour","ru":"чтить; почитать","ipa":"tə ˈɒnə(r)"},{"unit":4,"category":"verb","en":"to invent","ru":"изобретать","ipa":"tə ɪnˈvent"},{"unit":4,"category":"verb","en":"to keep up with (something)","ru":"поспевать за чем-либо","ipa":"tə kiːp ʌp wɪð"},{"unit":4,"category":"verb","en":"to lay the foundation(s)","ru":"заложить основы","ipa":"tə leɪ ðə faʊnˈdeɪʃən(z)"},{"unit":4,"category":"verb","en":"to outperform","ru":"превосходить по характеристикам; опережать","ipa":"tə ˌaʊt.pəˈfɔː(r)m"},{"unit":4,"category":"verb","en":"to pave the way (for/to)","ru":"проложить путь (для/к)","ipa":"tə ˈpeɪv ðə weɪ"},{"unit":4,"category":"verb","en":"to predict","ru":"предсказывать; прогнозировать","ipa":"tə prɪˈdɪkt"},{"unit":4,"category":"verb","en":"to purchase the rights","ru":"приобрести права","ipa":"tə ˈpɜː(r)tʃəs ðə rights"},{"unit":4,"category":"verb","en":"to recognize","ru":"выражать признание; признавать","ipa":"tə ˈrekəɡnaɪz"},{"unit":4,"category":"verb","en":"to share the recipe","ru":"поделиться рецептом","ipa":"tə ʃeə(r) ðə ˈresəpi"},{"unit":4,"category":"verb","en":"to smuggle","ru":"заниматься контрабандой; тайно провозить","ipa":"tə ˈsmʌɡl"},{"unit":4,"category":"verb","en":"to tackle","ru":"взяться за решение; решить проблему","ipa":"təˈtækəl"},{"unit":4,"category":"verb","en":"to wear down","ru":"изнашиваться","ipa":"tə weə(r) daʊn"},{"unit":4,"category":"adjective","en":"accessible","ru":"доступный","ipa":"əkˈsesəbl"},{"unit":4,"category":"adjective","en":"essential","ru":"существенный; необходимый","ipa":"ˈɪsenʃl"},{"unit":4,"category":"adjective","en":"groundbreaking","ru":"совершающий прорыв; новаторский","ipa":"ˈɡraʊndbreɪkɪŋ"},{"unit":4,"category":"noun","en":"achievement","ru":"достижение","ipa":"əˈtʃiːvmənt"},{"unit":4,"category":"noun","en":"application","ru":"приложение; применение","ipa":"ˌæplɪˈkeɪʃn"},{"unit":4,"category":"noun","en":"artificial intelligence","ru":"искусственный интеллект","ipa":"ˌɑːtɪfɪʃl ɪnˈtelɪdʒəns"},{"unit":4,"category":"noun","en":"assembly line","ru":"конвейер","ipa":"əˈsembli laɪn"},{"unit":4,"category":"noun","en":"attempt","ru":"попытка","ipa":"əˈtempt"},{"unit":4,"category":"noun","en":"award","ru":"награда; премия","ipa":"əˈwɔːd"},{"unit":4,"category":"noun","en":"breakthrough","ru":"прорыв","ipa":"ˈbreɪkθruː"},{"unit":4,"category":"noun","en":"contribution","ru":"вклад","ipa":"ˌkɒntrɪˈbjuːʃn"},{"unit":4,"category":"noun","en":"convenience","ru":"удобство; устройство","ipa":"kənˈviːniəns"},{"unit":4,"category":"noun","en":"cornerstone","ru":"краеугольный камень; основа","ipa":"ˈkɔːnəstəʊn"},{"unit":4,"category":"noun","en":"discovery","ru":"открытие","ipa":"dɪˈskʌvəri"},{"unit":4,"category":"noun","en":"efficiency","ru":"эффективность","ipa":"ɪˈfɪʃnsi"},{"unit":4,"category":"noun","en":"elaborate marketing campaign","ru":"продуманная маркетинговая кампания","ipa":"ɪˈlæbərət ˈmɑːkɪtɪŋ kæmˈpeɪn"},{"unit":4,"category":"noun","en":"engine","ru":"двигатель","ipa":"ˈendʒɪn"},{"unit":4,"category":"noun","en":"enterprise","ru":"предприятие","ipa":"ˈentəpraɪz"},{"unit":4,"category":"noun","en":"founder","ru":"основатель","ipa":"ˈfaʊndə(r)"},{"unit":4,"category":"noun","en":"high-tech security features","ru":"высокотехнологичные функции безопасности","ipa":"ˌhaɪ ˈtek sɪˈkjʊərəti ˈfiːtʃə(r)s"},{"unit":4,"category":"noun","en":"impact","ru":"влияние","ipa":"ˈɪmpækt"},{"unit":4,"category":"noun","en":"invention","ru":"изобретение","ipa":"ɪnˈvenʃən"},{"unit":4,"category":"noun","en":"legacy","ru":"наследие","ipa":"ˈleɡəsi"},{"unit":4,"category":"noun","en":"light bulb","ru":"электрическая лампочка","ipa":"ˈlaɪt bʌlb"},{"unit":4,"category":"noun","en":"manufacturing might","ru":"производственная мощь","ipa":"ˌmænjuˈfæktʃərɪŋ maɪt"},{"unit":4,"category":"noun","en":"vault","ru":"хранилище; защищённое помещение","ipa":"vɔːlt"},{"unit":4,"category":"noun","en":"vehicle","ru":"транспортное средство","ipa":"ˈviːəkl"},{"unit":5,"category":"verb","en":"to ban","ru":"запрещать","ipa":"tuː bæn"},{"unit":5,"category":"verb","en":"to combat climate change","ru":"бороться с изменениями климата","ipa":"tuː ˈkɒmbæt ˈklaɪmət tʃeɪndʒ"},{"unit":5,"category":"verb","en":"to cause damage to something","ru":"наносить ущерб чему-либо","ipa":"tuː kɔːz ˈdæmɪdʒ tə ˈsʌmθɪŋ"},{"unit":5,"category":"verb","en":"to recycle garbage","ru":"перерабатывать мусор","ipa":"tuː ˌriːˈsaɪkl ˈɡɑː(r)bɪdʒ"},{"unit":5,"category":"verb","en":"to replace","ru":"заменять","ipa":"tuː rɪˈpleɪs"},{"unit":5,"category":"adjective","en":"affordable","ru":"доступный по цене","ipa":"əˈfɔː(r)dəbl"},{"unit":5,"category":"adjective","en":"fair","ru":"честный; справедливый","ipa":"feə(r)"},{"unit":5,"category":"adjective","en":"sustainable","ru":"устойчивый; экологичный","ipa":"səˈsteɪnəbl"},{"unit":5,"category":"adjective","en":"urban","ru":"городской","ipa":"ˈɜː(r)bən"},{"unit":5,"category":"noun","en":"carbon dioxide","ru":"углекислый газ","ipa":"ˌkɑː(r)bən daɪˈɒksɪd"},{"unit":5,"category":"noun","en":"congestion","ru":"затор; пробка","ipa":"kənˈdʒestʃən"},{"unit":5,"category":"noun","en":"congested","ru":"перегруженный; загруженный","ipa":"kənˈdʒestɪd"},{"unit":5,"category":"noun","en":"consequence","ru":"последствие","ipa":"ˈkɒnsɪkwəns"},{"unit":5,"category":"noun","en":"deforestation","ru":"вырубка лесов","ipa":"ˌdiːˌfɒrɪˈsteɪʃn"},{"unit":5,"category":"noun","en":"depletion","ru":"истощение","ipa":"dɪˈpliːʃn"},{"unit":5,"category":"noun","en":"distribution","ru":"распределение","ipa":"ˌdɪstrɪˈbjuːʃn"},{"unit":5,"category":"noun","en":"emissions","ru":"выбросы; выхлопы","ipa":"ɪˈmɪʃnz"},{"unit":5,"category":"noun","en":"environment","ru":"окружающая среда","ipa":"ɪnˈvaɪrənmənt"},{"unit":5,"category":"noun","en":"equity","ru":"справедливость; равенство с учётом потребностей","ipa":"ˈekwəti"},{"unit":5,"category":"noun","en":"ethnicity","ru":"этническая принадлежность","ipa":"eθˈnɪsəti"},{"unit":5,"category":"noun","en":"fossil fuel","ru":"ископаемое топливо","ipa":"ˈfɒsl ˈfjuːəl"},{"unit":5,"category":"noun","en":"global warming","ru":"глобальное потепление","ipa":"ˈɡləʊbl ˈwɔː(r)mɪŋ"},{"unit":5,"category":"noun","en":"greenhouse effect","ru":"парниковый эффект","ipa":"ˈɡriːnhaʊs ɪˈfekt"},{"unit":5,"category":"noun","en":"healthcare","ru":"здравоохранение","ipa":"ˈhelθ keə(r)"},{"unit":5,"category":"noun","en":"job displacement","ru":"сокращение/вытеснение рабочих мест","ipa":"dʒɒb dɪsˈpleɪsmənt"},{"unit":5,"category":"noun","en":"life expectancy","ru":"продолжительность жизни","ipa":"laɪf ɪkˈspektənsi"},{"unit":5,"category":"noun","en":"pedestrian","ru":"пешеход","ipa":"pəˈdestriən"},{"unit":5,"category":"noun","en":"pollution","ru":"загрязнение","ipa":"pəˈluːʃn"},{"unit":5,"category":"noun","en":"to pollute","ru":"загрязнять","ipa":"tə pəˈluːt"},{"unit":5,"category":"noun","en":"renewable energy","ru":"возобновляемая энергия","ipa":"rɪˈnjuːəbl ˈenə(r)dʒi"},{"unit":5,"category":"noun","en":"wealth inequality","ru":"имущественное неравенство","ipa":"welθ ˌɪnɪˈkwɒləti"},{"unit":5,"category":"noun","en":"workload","ru":"рабочая нагрузка","ipa":"ˈwɜː(r)kləʊd"},{"unit":6,"category":"verb","en":"to apply for a job","ru":"подавать заявление о приёме на работу","ipa":"tə əˈplaɪ fɔː ə ʤɒb"},{"unit":6,"category":"verb","en":"to be responsible for","ru":"быть ответственным за","ipa":"tə biː rɪsˈpɒnsəbl fɔː"},{"unit":6,"category":"verb","en":"to compete","ru":"конкурировать","ipa":"tə kəmˈpiːt"},{"unit":6,"category":"verb","en":"to employ","ru":"нанимать на работу","ipa":"tə ɪmˈplɔɪ"},{"unit":6,"category":"verb","en":"to recruit","ru":"нанимать; набирать персонал","ipa":"rɪˈkruːt"},{"unit":6,"category":"verb","en":"to fire","ru":"увольнять","ipa":"tə ˈfaɪə"},{"unit":6,"category":"verb","en":"to require","ru":"требовать","ipa":"tə rɪˈkwaɪə(r)"},{"unit":6,"category":"verb","en":"to suppose","ru":"предполагать","ipa":"səˈpəʊz"},{"unit":6,"category":"verb","en":"to consider","ru":"считать; полагать; рассматривать","ipa":"kənˈsɪdə(r)"},{"unit":6,"category":"verb","en":"to negotiate","ru":"вести переговоры; договариваться","ipa":"tə nɪˈɡəʊʃɪeɪt"},{"unit":6,"category":"verb","en":"to overcome","ru":"преодолевать; справляться с","ipa":"tə əʊvəˈkʌm"},{"unit":6,"category":"verb","en":"to implement","ru":"выполнять; осуществлять; внедрять","ipa":"ˈɪmplɪmənt"},{"unit":6,"category":"adjective","en":"concise","ru":"краткий; лаконичный","ipa":"kənˈsaɪs"},{"unit":6,"category":"adjective","en":"crucial","ru":"важный; решающий","ipa":"ˈkruːʃəl"},{"unit":6,"category":"noun","en":"applicant","ru":"кандидат; соискатель","ipa":"ˈæplɪkənt"},{"unit":6,"category":"noun","en":"benefit","ru":"преимущество; выгода","ipa":"ˈbenɪfɪt"},{"unit":6,"category":"noun","en":"cover letter","ru":"сопроводительное письмо","ipa":"ˈkʌvə ˈletə"},{"unit":6,"category":"noun","en":"competitor","ru":"конкурент; соперник","ipa":"kəmˈpetɪtə"},{"unit":6,"category":"noun","en":"confidence","ru":"уверенность","ipa":"ˈkɒnfɪdəns"},{"unit":6,"category":"noun","en":"competencies","ru":"профессиональные качества","ipa":"ˈkɒmpɪtənsɪz"},{"unit":6,"category":"noun","en":"CV (Curriculum Vitae)","ru":"резюме","ipa":"kəˈrɪkjʊləm ˈviːtaɪ"},{"unit":6,"category":"noun","en":"demands","ru":"требования","ipa":"dɪˈmɑːndz"},{"unit":6,"category":"noun","en":"employee","ru":"сотрудник","ipa":"ɪmˌplɔɪˈiː"},{"unit":6,"category":"noun","en":"employer","ru":"работодатель","ipa":"ɪmˈplɔɪə"},{"unit":6,"category":"noun","en":"experience","ru":"опыт","ipa":"ɪksˈpɪəriəns"},{"unit":6,"category":"noun","en":"fringe benefits","ru":"дополнительные льготы","ipa":"frɪndʒ ˈbenɪfɪts"},{"unit":6,"category":"noun","en":"HR (Human Resources)","ru":"отдел кадров","ipa":"ˈhjuːmən rɪˈzɔːsɪz"},{"unit":6,"category":"noun","en":"job interview","ru":"собеседование","ipa":"ˈdʒɒb ˈɪntəvjuː"},{"unit":6,"category":"noun","en":"position","ru":"должность","ipa":"pəˈzɪʃn"},{"unit":6,"category":"noun","en":"prospects","ru":"перспективы","ipa":"ˈprɒspekts"},{"unit":6,"category":"noun","en":"references","ru":"рекомендации","ipa":"ˈrefrənsɪz"},{"unit":6,"category":"noun","en":"salary","ru":"ежемесячная зарплата; оклад","ipa":"ˈsæləri"},{"unit":6,"category":"noun","en":"career","ru":"карьера; профессиональная деятельность","ipa":"kəˈrɪə"},{"unit":6,"category":"noun","en":"job description","ru":"описание должностных обязанностей","ipa":"ˈdʒɒb dɪˈskrɪpʃn"},{"unit":6,"category":"noun","en":"key achievements","ru":"основные достижения","ipa":"kiː əˈtʃiːvmənts"},{"unit":6,"category":"noun","en":"recruitment","ru":"набор персонала; трудоустройство","ipa":"rɪˈkruːtmənt"},{"unit":6,"category":"noun","en":"vacancy","ru":"вакансия","ipa":"ˈveɪkənsi"},{"unit":6,"category":"verb","en":"to qualify","ru":"соответствовать требованиям; получать квалификацию","ipa":"tə ˈkwɒlɪfaɪ"},{"unit":6,"category":"verb","en":"to offer","ru":"предлагать","ipa":"tə ˈɒfə"},{"unit":6,"category":"verb","en":"to specialize in","ru":"специализироваться в","ipa":"tə ˈspeʃəlaɪz ɪn"}];
+const ORAL = [{"unit":4,"topic":"Inventions","q":"What was revolutionary about Gutenberg’s concept? How long had the printing press stayed unchanged before it began to evolve?","a":"Gutenberg introduced movable type: separate metal characters could be rearranged to print different texts. According to the textbook, the mechanics of the press remained almost unchanged for 300 years.","verify":false},{"unit":4,"topic":"Inventions","q":"Why did the early printing presses wear down quickly?","a":"They required great force to operate. Over time, the wooden parts cracked and the metal type wore down.","verify":false},{"unit":4,"topic":"Inventions","q":"Who is recognized as the inventor of the electric light bulb? What key elements led to the triumph of his version of the incandescent light bulb?","a":"Thomas Edison is credited with developing the first commercially feasible incandescent bulb. He used effective materials, a higher vacuum and high resistance, and he developed other inventions needed for practical electric lighting.","verify":false},{"unit":4,"topic":"Inventions","q":"What breakthrough was made by the Wright brothers?","a":"Orville and Wilbur Wright successfully tested a flying vehicle on 17 December 1903. Their Flyer took off, flew at an even speed and landed without damage.","verify":false},{"unit":4,"topic":"Inventions","q":"What contraptions preceded the first airplane invented by the Wright brothers?","a":"Earlier inventors experimented with kites, balloons and gliders. The Wright brothers built on these earlier attempts.","verify":false},{"unit":4,"topic":"Inventions","q":"What do you know about the invention made by Joseph Nicéphore Niépce?","a":"Niépce created a prototype of a photographic camera in 1816. He is credited with taking the oldest surviving photograph in 1826; it shows the view from a window of his house.","verify":false},{"unit":4,"topic":"Inventions","q":"What breakthrough in automotive industry was made by Carl Benz?","a":"Carl Benz patented a gas-powered engine for his car. His invention helped usher in the era of the automobile and led to the Mercedes-Benz enterprise.","verify":false},{"unit":4,"topic":"Inventions","q":"What was Henry Ford’s contribution to the development of automotive industry?","a":"Henry Ford used mass-production techniques, especially the assembly line. This made cars more affordable and helped create a global automotive industry.","verify":false},{"unit":4,"topic":"Inventions","q":"Who was Alexander Graham Bell? What did he invent?","a":"Alexander Graham Bell was an inventor and scientist best known for developing the telephone, which transformed long-distance communication.","verify":true},{"unit":4,"topic":"Inventions","q":"Why is the date March 10th, 1876 important? What happened on that day?","a":"It is remembered as the date of the first successful telephone call by Alexander Graham Bell. He called to his assistant Thomas Watson.","verify":true},{"unit":4,"topic":"Awards","q":"What is Alfred Nobel famous for? What is his most prominent invention?","a":"Alfred Nobel was a Swedish chemist, engineer and inventor. He is especially famous for inventing dynamite and for establishing the Nobel Prizes in his will.","verify":false},{"unit":4,"topic":"Awards","q":"How was the Nobel Prize established?","a":"Nobel left most of his fortune in a trust in his will. The money was used to create annual prizes that recognize important achievements in several fields.","verify":true},{"unit":4,"topic":"Awards","q":"Describe the selection process for the Nobel Prize winners.","a":"Qualified people and institutions nominate candidates. Specialist committees review the nominations and achievements, then select laureates; the prizes are awarded at a formal ceremony.","verify":true},{"unit":4,"topic":"Awards","q":"What fields is the Nobel Prize awarded in?","a":"The six fields are Physics, Chemistry, Physiology or Medicine, Literature, Peace and Economic Sciences.","verify":false},{"unit":4,"topic":"Awards","q":"What is the maximum number of laureates that can receive a single award, and what is the exception?","a":"A prize in one category can normally be shared by up to three individuals. The Peace Prize may also be awarded to an organization.","verify":true},{"unit":4,"topic":"Awards","q":"What are some examples of famous Nobel laureates mentioned in the video?","a":"Examples in the course material include Ernest Hemingway for Literature, Alexander Fleming for penicillin, Albert Einstein for the photoelectric effect, Martin Luther King Jr. for Peace, and Marie Curie for her scientific work.","verify":true},{"unit":4,"topic":"Computing","q":"What is Alan Turing famous for?","a":"Alan Turing was a pioneering mathematician and computer scientist. His wartime codebreaking and theoretical work helped shape modern computing and cryptography.","verify":false},{"unit":4,"topic":"Computing","q":"What does the concept of the Turing Machine refer to?","a":"A Turing Machine is a theoretical mathematical model of computation, not a physical computer. It helps explain how algorithms and general-purpose computation work.","verify":false},{"unit":4,"topic":"Computing","q":"What is the Turing Test?","a":"The Turing Test asks whether a machine can communicate in a way that makes a human evaluator unable to reliably distinguish it from a person.","verify":false},{"unit":4,"topic":"Computing","q":"What do you know about the Turing Award? What fields is it awarded in?","a":"The Turing Award is a major award in computer science, established by the Association for Computing Machinery in 1966. It recognizes major contributions to computing, including algorithms, programming theory, cryptography and artificial intelligence.","verify":true},{"unit":4,"topic":"Trade secrets","q":"What do you know about the creation of the original recipe for the Coca-Cola drink and the shroud of mystery around it?","a":"John Pemberton created the drink in 1886. The recipe was passed on orally at first; the company later used the mystery surrounding it as a marketing strategy to attract attention.","verify":false},{"unit":4,"topic":"Trade secrets","q":"Where is the Coca-Cola formula kept now? What security measures protect it?","a":"According to the course text, a written recipe is displayed as being protected in a vault at the World of Coca-Cola in Atlanta. The vault story mentions a palm scanner, a code pad, a steel door and an additional safe; these claims are presented as the company’s account.","verify":false},{"unit":4,"topic":"Trade secrets","q":"What is the purpose of creating a shroud of mystery around the Coca-Cola formula?","a":"The stated purpose is to generate attention and make the product more interesting to customers. The textbook also warns that this story may be part of an elaborate marketing campaign.","verify":false},{"unit":4,"topic":"Industry","q":"What was the industrial revolution in the USA based on according to the text?","a":"The text says that the American Industrial Revolution was partly based on industrial know-how and intellectual property brought out of England, including plans for textile machinery.","verify":false},{"unit":4,"topic":"Industry","q":"How did the invention of the water-powered spinning frame change the country’s industrial sector?","a":"Richard Arkwright’s water-powered spinning frame increased cotton-goods production tenfold. It helped factories meet growing demand for textiles.","verify":false},{"unit":4,"topic":"Industry","q":"What laws did the British Parliament pass at the end of the 18th century to protect the country’s industrial secrets?","a":"In 1774, Parliament passed laws to protect industrial secrets, including prohibitions on engineers and mechanics travelling abroad.","verify":false},{"unit":4,"topic":"Industry","q":"How did the technology of the water frame appear in the USA according to the text?","a":"Samuel Slater learned about the water frame during an apprenticeship in England, memorized the plans and sailed to America in 1789. He later established a factory in Rhode Island.","verify":false},{"unit":4,"topic":"Industry","q":"What is the Rhode Island System?","a":"It was a model of factory life built around a mill. The village included workers’ housing and a company store, and it became an early example of an integrated factory community.","verify":false},{"unit":4,"topic":"Industry","q":"What did Samuel Slater and Francis Lowell have in common?","a":"Both learned about textile machinery in England and memorized technical plans before returning to America. Slater brought knowledge of the water frame; Lowell brought plans for the power loom.","verify":false},{"unit":4,"topic":"Trade secrets","q":"What does know-how refer to?","a":"Know-how means the practical knowledge, skills or methods needed to do something, especially in a technical or commercial process.","verify":false},{"unit":4,"topic":"Trade secrets","q":"Why is it important to take all advertisement with a grain of salt?","a":"Advertising is designed to persuade people, so it can emphasize benefits and hide limitations. We should check evidence and compare reliable sources before believing a claim.","verify":false},{"unit":4,"topic":"Trade secrets","q":"What is the purpose of smuggling? Why does it still exist today?","a":"Smuggling means moving goods or information illegally to avoid restrictions or gain an advantage. It continues because illegal trade can bring profit or access to valuable goods and technology.","verify":false},{"unit":4,"topic":"Trade secrets","q":"What is the brain drain and why does it happen?","a":"Brain drain is the loss of skilled or educated people who leave their home country. They may move for better salaries, career opportunities, research facilities or living conditions.","verify":false},{"unit":4,"topic":"Trade secrets","q":"What are trade secrets? What categories and examples of trade secrets are mentioned in the video?","a":"A trade secret is confidential business information protected by keeping it secret. Examples include recipes, processes, product designs, manufacturing methods and collections of information; famous examples in the course include the Coca-Cola formula and a spice blend.","verify":true},{"unit":4,"topic":"Inventions","q":"Name top Russian inventions that changed the world.","a":"Examples from the course text include Alexander Popov’s wireless communication work (radio), Igor Sikorsky’s helicopter and aircraft work, Alexander Poniatoff’s videotape recorder, Fyodor Pirotsky’s electric-railway experiments, fermented milk products studied by Ilya Mechnikov, and caterpillar tracks developed by Russian inventors.","verify":true},{"unit":5,"topic":"Social challenges","q":"Do you agree that \"mental health and well-being begin when we finally log off\"? Can you think of examples where being online actually has a negative impact on mental health?","a":"Yes, I partly agree. Spending too much time online can reduce sleep, increase stress and make people compare themselves with others. Taking breaks and meeting people in person can improve well-being.","verify":false},{"unit":5,"topic":"Social challenges","q":"Who do you think has more power in the cycle of consumerism: the companies that make products or the people who buy them? Defend your answer.","a":"Companies have strong influence because advertising encourages people to buy new products. However, consumers also have power: they can buy only what they need, repair things and choose sustainable products.","verify":false},{"unit":5,"topic":"Social challenges","q":"They say that the internet gives everyone a voice. What responsibilities come with having that voice, especially when sharing information?","a":"People should check facts before reposting, respect others and protect private information. Sharing a rumour without checking it can spread misinformation and harm someone.","verify":false},{"unit":5,"topic":"Social challenges","q":"How do globalisation and new technology contribute to wealth inequality?","a":"Technology can create high-paying jobs, but not everyone has the same access to education or digital tools. Global companies may benefit more than low-paid workers, so the gap between rich and poor can grow.","verify":false},{"unit":5,"topic":"Social challenges","q":"What practical steps should we take to protect our data privacy?","a":"We should use strong, unique passwords and two-factor authentication, check app permissions, avoid suspicious links and share less personal information online.","verify":false},{"unit":5,"topic":"Social challenges","q":"How do equality and equity differ?","a":"Equality means giving everyone the same resources or treatment. Equity means taking different needs and circumstances into account so that people have a fair chance.","verify":true},{"unit":5,"topic":"Social challenges","q":"Choosing between equality and equity, which one seems fairer to you? Provide an example.","a":"I think equity can be fairer because people may need different kinds of support. For example, a student who needs extra help can receive more time or learning materials so that everyone has a fair chance.","verify":true},{"unit":5,"topic":"Climate and mobility","q":"What is climate change, and why is it considered a significant global issue?","a":"Climate change is a long-term change in temperatures and weather patterns. It matters because it can cause heatwaves, floods, droughts, ecosystem damage and risks to human health.","verify":false},{"unit":5,"topic":"Climate and mobility","q":"What human activities cause climate change?","a":"Burning fossil fuels for energy and transport releases greenhouse gases such as carbon dioxide. Deforestation, industry and some agricultural activities also contribute.","verify":false},{"unit":5,"topic":"Climate and mobility","q":"What is global warming, and what are its consequences?","a":"Global warming is the long-term rise in the Earth's average temperature. It contributes to melting ice, rising sea levels, heatwaves and changes in weather patterns.","verify":false},{"unit":5,"topic":"Climate and mobility","q":"What can be done to combat climate change?","a":"We can use renewable energy, save electricity, improve energy efficiency, protect forests, recycle waste and choose public transport, cycling or walking when possible.","verify":false},{"unit":5,"topic":"Climate and mobility","q":"What are the major mobility challenges that cities face today?","a":"Cities often face traffic congestion, air pollution, crowded public transport and unsafe conditions for pedestrians and cyclists. These problems waste time and affect health.","verify":false},{"unit":5,"topic":"Climate and mobility","q":"What does sustainable transport mean? Can you name some examples of sustainable transport?","a":"Sustainable transport moves people with lower environmental impact. Examples include walking, cycling, electric public transport, buses and trains powered by cleaner energy.","verify":false},{"unit":5,"topic":"Climate and mobility","q":"What are three key benefits of sustainable transport?","a":"It reduces emissions and air pollution, helps ease traffic congestion and can improve public health by making walking and cycling safer and easier.","verify":false},{"unit":5,"topic":"Climate and mobility","q":"Why is urban infrastructure important in relation to sustainable mobility?","a":"People need reliable public transport, safe cycle lanes, good pavements and accessible stations. Without this infrastructure, choosing sustainable transport is much harder.","verify":false},{"unit":5,"topic":"Climate and mobility","q":"What solutions can help reduce air pollution?","a":"Cities can improve public transport, promote walking and cycling, introduce cleaner vehicles, reduce fossil-fuel use and increase green spaces.","verify":true},{"unit":5,"topic":"AI and work","q":"In what ways is AI transforming the way people work in various industries?","a":"AI can analyse large amounts of data, automate repetitive tasks, support customer service and help specialists make decisions. It is used in healthcare, manufacturing, transport and IT.","verify":false},{"unit":5,"topic":"AI and work","q":"What concerns do people have about the increasing use of AI in workplaces?","a":"People worry about job displacement, privacy, biased decisions and mistakes that are difficult to explain. Workers may also need new skills to keep up with technology.","verify":false},{"unit":5,"topic":"AI and work","q":"What opportunities does AI create for workers?","a":"AI can make routine work faster, support research and create jobs in data analysis, AI development, cybersecurity and system maintenance.","verify":false},{"unit":5,"topic":"AI and work","q":"What are some limitations and risks associated with AI?","a":"AI can produce inaccurate results, reflect bias in its data and expose private information. It does not replace human judgement, accountability and empathy in every situation.","verify":false},{"unit":5,"topic":"AI and work","q":"How do you think society should adapt to the changes brought by AI technology?","a":"Society should provide lifelong learning, teach digital skills, protect workers’ rights and create clear rules for responsible AI use.","verify":false},{"unit":5,"topic":"AI and work","q":"How do you think the development of AI will continue to impact the job market in the future?","a":"AI will automate some tasks and change many existing jobs, but it will also create new roles. People will need to develop technical skills, creativity and communication.","verify":false},{"unit":5,"topic":"AI and work","q":"Why do some businesses view AI as a valuable tool for reducing costs?","a":"AI can automate repetitive tasks, analyse information quickly and reduce some operational errors. This can save time and money, although reliable systems still require investment and supervision.","verify":true},{"unit":5,"topic":"AI and work","q":"Do you think people will eventually be replaced by technology, or will they always find a way to adapt? Why?","a":"I think technology will replace some tasks, but people will continue to be important. Workers can adapt by learning new skills, solving complex problems and doing work that requires human communication and judgement.","verify":true},{"unit":6,"topic":"Job market","q":"How has the job application process changed over time?","a":"Many applications are now submitted online through company websites and recruitment platforms. Candidates send a CV and cover letter electronically and may complete online tests before an interview.","verify":false},{"unit":6,"topic":"Job market","q":"Why is it important to have well-prepared application documents when applying for a job online?","a":"A concise CV and a tailored cover letter help an applicant make a good first impression. They show relevant experience, competencies and attention to detail.","verify":false},{"unit":6,"topic":"Job market","q":"Why is job competition higher in the modern job market?","a":"Online vacancies attract applicants from a wider area, and employers can compare many candidates quickly. Some positions also require increasingly specialized skills.","verify":false},{"unit":6,"topic":"Job market","q":"What aspects do employers typically consider during a job interview?","a":"Employers consider qualifications, experience, competencies, communication skills, confidence and motivation. They also check whether the applicant fits the position and the team.","verify":false},{"unit":6,"topic":"Job market","q":"What is the difference between a general interview and a technical interview?","a":"A general interview focuses on motivation, experience and communication. A technical interview tests job-specific knowledge and problem-solving skills.","verify":false},{"unit":6,"topic":"Job market","q":"How can a candidate demonstrate genuine interest in a job and the company during an interview?","a":"The candidate should research the company, understand the job description and ask thoughtful questions. They can explain how their skills match the position.","verify":false},{"unit":6,"topic":"Job market","q":"What is a CV and how does it help create a positive first impression with potential employers?","a":"A CV, or Curriculum Vitae, is a concise summary of a person's education, experience, skills and achievements. A clear, relevant CV helps an employer quickly see why the applicant may be suitable.","verify":true},{"unit":6,"topic":"Job market","q":"What are the key components of a CV, and why is each part important in the job application process?","a":"A CV usually includes contact details, education, experience, skills and key achievements; references may also be included. These sections help employers assess the applicant's background and suitability.","verify":true},{"unit":6,"topic":"Interview skills","q":"What are the key steps for effective preparation before a job interview?","a":"Research the company and the vacancy, review your CV, prepare examples of your achievements and practise common questions. Plan your route or test your connection if the interview is online.","verify":false},{"unit":6,"topic":"Interview skills","q":"How can a candidate effectively highlight their strengths during an interview?","a":"They should choose strengths that match the job and support each one with a specific example. For example, I can say I am responsible and describe a project I completed on time.","verify":false},{"unit":6,"topic":"Interview skills","q":"Why is it important to address one's weaknesses professionally? Provide an example.","a":"An honest answer shows self-awareness and a willingness to improve. For example, I used to find public speaking difficult, so I practise presentations and ask for feedback.","verify":false},{"unit":6,"topic":"Interview skills","q":"Why do employers ask candidates about handling challenges? How should a candidate respond?","a":"Employers want to understand how candidates solve problems, manage stress and learn from mistakes. A good answer explains the situation, the action taken and the result.","verify":false},{"unit":6,"topic":"Interview skills","q":"What behaviour should candidates avoid during a job interview?","a":"Candidates should avoid arriving late, interrupting, speaking negatively about previous employers or giving dishonest answers. They should also avoid using their phone during the interview.","verify":false},{"unit":6,"topic":"Interview skills","q":"Why is researching the company essential before going for an interview?","a":"Research helps a candidate understand the company's products, values and recent work. It also allows them to explain why they want the job and ask relevant questions.","verify":true},{"unit":6,"topic":"Interview skills","q":"What common mistake do many people make after an interview?","a":"A common mistake is not following up or reflecting on the interview. A short, polite thank-you message can reinforce interest, and reviewing the questions helps prepare for future interviews.","verify":true},{"unit":6,"topic":"Future careers","q":"According to the 2023 Future of Jobs report, what factor will have the greatest impact on the job market?","a":"The report highlights technological change, especially digitalisation and emerging technologies, as major forces reshaping work. In an oral answer, name the exact factor used in your course video.","verify":true},{"unit":6,"topic":"Future careers","q":"In which fields do employers expect jobs to grow?","a":"Expected growth areas include technology and data, artificial intelligence, cybersecurity, digital marketing and sustainability-related work. These fields respond to changing business and social needs.","verify":false},{"unit":6,"topic":"Future careers","q":"What are the key responsibilities of a digital marketing and strategy specialist?","a":"They plan digital campaigns, analyse audiences and performance data, manage online channels and help a company reach its business goals.","verify":false},{"unit":6,"topic":"Future careers","q":"Why is the demand for big data analysts expected to grow?","a":"Organisations collect more data and need specialists who can analyse it, find patterns and support evidence-based decisions.","verify":false},{"unit":6,"topic":"Future careers","q":"What role do legal tech specialists play, and what factors are driving the growing demand for them?","a":"Legal tech specialists use technology to improve legal services, manage documents and automate routine processes. Demand grows as law firms and businesses adopt digital tools and handle more data.","verify":false},{"unit":6,"topic":"Future careers","q":"Why is there an increasing demand for cybersecurity and data protection specialists?","a":"More services and personal information are online, which creates security and privacy risks. Organisations need specialists to protect systems, prevent attacks and meet data-protection requirements.","verify":false},{"unit":6,"topic":"Future careers","q":"How are blockchain developers influencing industries beyond cryptocurrency?","a":"They develop systems for secure, shared records and verifiable transactions. These tools can be used in supply chains, identity management, finance and other areas where traceability matters.","verify":false}];
+const GRAMMAR = [{"unit":4,"title":"Participles: -ing и -ed","tag":"PARTICIPLE I / II","short":"-ing описывает действующее лицо/процесс; -ed (V3) часто обозначает результат или пассивное значение.","body":[["Participle I","V + -ing. Часто описывает того, кто выполняет действие: a scientist researching AI — учёный, который исследует ИИ."],["Participle II","V3 / -ed. Часто показывает, что действие совершено над предметом: an invention developed in 1903 — изобретение, разработанное в 1903 году."],["Как выбрать","Если существительное само выполняет действие — обычно -ing. Если действие совершено над ним или оно находится в результате действия — обычно V3/-ed."],["Примеры из тем курса","the team developing a new engine; a prize awarded to a scientist; a groundbreaking discovery made by researchers."]],"practice":[{"q":"The scientist ___ artificial intelligence is making new discoveries.","opts":["researching","researched","research"],"correct":0,"why":"The scientist выполняет действие research, поэтому используем Participle I: researching."},{"q":"The invention ___ in the text changed the industry.","opts":["describing","described","describe"],"correct":1,"why":"Изобретение описывают; значение пассивное. Нужен Participle II: described."},{"q":"Marie Curie, ___ two Nobel Prizes, became famous worldwide.","opts":["awarded","awarding","award"],"correct":0,"why":"Мари Кюри получила награды — это пассивный результат, поэтому awarded."},{"q":"The engineers ___ the new engine tested it carefully.","opts":["developed","developing","develop"],"correct":1,"why":"Инженеры сами разрабатывают двигатель, поэтому developing."},{"q":"Choose the correct phrase:","opts":["a breaking machine","a broken machine","a break machine"],"correct":1,"why":"Broken — Participle II от break; машина сломана, то есть действие над ней."}]},{"unit":5,"title":"Zero & First Conditional","tag":"IF-CLAUSES","short":"Zero Conditional — общие факты. First Conditional — реальная возможность в будущем.","body":[["Zero Conditional","If + Present Simple, Present Simple. Используется для общих истин и закономерностей: If people don't sleep enough, they feel tired."],["First Conditional","If + Present Simple, will + verb. Используется для реальной будущей ситуации: If we use public transport, we will reduce emissions."],["Главная ловушка","После if обычно не ставим will: If it rains, we will stay at home (не “If it will rain…”)."],["Unless","Unless = if not. Unless we act now, the problem will get worse."]],"practice":[{"q":"If people don't sleep enough, they ___ tired.","opts":["feel","will feel","felt"],"correct":0,"why":"Это общая закономерность, поэтому Zero Conditional: Present Simple в обеих частях."},{"q":"If we use more renewable energy, we ___ emissions.","opts":["reduce","reduced","will reduce"],"correct":2,"why":"Это возможный результат в будущем: First Conditional, will + глагол."},{"q":"Unless we ___ today, the problem will get worse.","opts":["will act","act","acted"],"correct":1,"why":"После unless используется Present Simple, даже когда речь о будущем."},{"q":"If you buy things you don't need, you ___ money.","opts":["waste","will wasted","wasted"],"correct":0,"why":"Общее следствие — Zero Conditional: you waste."},{"q":"Which sentence is correct?","opts":["If it will rain, we will stay home.","If it rains, we will stay home.","If it rains, we stayed home."],"correct":1,"why":"В if-clause ставим Present Simple (rains), а в результате First Conditional — will stay."}]},{"unit":6,"title":"Complex Subject & infinitive","tag":"SUBJECT + TO-INFINITIVE","short":"Структуры вроде is expected to, seems to, is likely to позволяют сказать «ожидается, что…», «кажется, что…», «вероятно…».","body":[["Формула","Подлежащее + seem / appear / be likely / be expected / be known + to + verb."],["Примеры","Applicants are expected to answer questions — Ожидается, что кандидаты будут отвечать на вопросы. The company seems to need new staff — Кажется, компании нужны новые сотрудники."],["Время","Для действия раньше момента речи: seems to have + V3. Example: She seems to have found a job — Кажется, она нашла работу."],["Infinitive или -ing","want/need/plan + to do; enjoy/avoid/consider + doing. Некоторые глаголы меняют смысл: stop to do = остановиться, чтобы сделать; stop doing = перестать делать."]],"practice":[{"q":"Applicants are expected ___ the interview on time.","opts":["attending","to attend","attend"],"correct":1,"why":"После are expected используем to + infinitive: to attend."},{"q":"The company seems ___ more engineers.","opts":["to need","needing","need"],"correct":0,"why":"После seems в Complex Subject ставим to-infinitive: seems to need."},{"q":"She enjoys ___ technical articles.","opts":["to read","read","reading"],"correct":2,"why":"После enjoy используется форма V-ing: enjoys reading."},{"q":"The candidate is likely ___ a technical interview.","opts":["to have","having","has"],"correct":0,"why":"is likely + to-infinitive: is likely to have."},{"q":"Choose the correct meaning: “He stopped to answer the phone.”","opts":["Он перестал отвечать на телефон.","Он остановился, чтобы ответить на телефон.","Он продолжал отвечать."],"correct":1,"why":"Stop to do = прекратить другое действие, чтобы сделать это действие."}]}];
+const UNITS = {
+ 4:{title:"Technology, Science & Innovation",short:"Technology",icon:"💡",desc:"Изобретения, открытия, know-how и влияние технологий.",color:"green"},
+ 5:{title:"Global Issues",short:"Global issues",icon:"🌍",desc:"Климат, устойчивый транспорт, равенство и искусственный интеллект.",color:"blue"},
+ 6:{title:"Employment",short:"Employment",icon:"💼",desc:"Поиск работы, CV, собеседования и профессии будущего.",color:"purple"}
+};
+const LESSONS = [
+ {mode:"words",title:"Word quest",sub:"Лексика и переводы",icon:"🗂️"},
+ {mode:"grammar",title:"Grammar lab",sub:"Правило в действии",icon:"🧩"},
+ {mode:"speaking",title:"Speaking arena",sub:"Вопросы и ответы",icon:"🎤"},
+ {mode:"challenge",title:"Unit challenge",sub:"Смешанная проверка",icon:"🏆"}
+];
+const STATE_KEY = "englishSprintMirea_v1";
+function blankState(){return {xp:0,streak:0,lastDate:"",todayXp:0,todayDate:"",completed:[],learned:[],favorites:[],mistakes:[],answers:0,correct:0,quizRuns:0,history:[]}}
+let state = loadState();
+function loadState(){try{return {...blankState(),...JSON.parse(localStorage.getItem(STATE_KEY)||"{}")}}catch(e){return blankState()}}
+function saveState(){try{localStorage.setItem(STATE_KEY,JSON.stringify(state))}catch(e){} updateStats()}
+function dateKey(d=new Date()){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function refreshDay(){
+ const t=dateKey();
+ if(state.todayDate!==t){state.todayDate=t;state.todayXp=0;}
+}
+function awardXP(n){
+ refreshDay();
+ const today=dateKey(), yesterday=dateKey(new Date(Date.now()-86400000));
+ if(state.lastDate!==today){state.streak=(state.lastDate===yesterday)?state.streak+1:1;state.lastDate=today}
+ state.xp+=n;state.todayXp+=n;saveState();
+}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function shuffle(a){let b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function sample(a,n){return shuffle(a).slice(0,Math.min(n,a.length))}
+function norm(s){return String(s||"").toLowerCase().trim().replace(/[.,!?;:()[\]“”"'`]/g,"").replace(/\s+/g,"")}
+function unitName(u){return UNITS[u]?.title||"Смешанная практика"}
+function showView(name){
+ document.querySelectorAll(".view").forEach(el=>el.classList.remove("active"));
+ const id=name+"View";document.getElementById(id)?.classList.add("active");
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.view===name));
+ window.scrollTo({top:0,behavior:"smooth"});
+ if(name==="vocab")renderWords();
+ if(name==="speaking")renderOral();
+ if(name==="grammar")renderGrammar();
+ if(name==="path")renderPath();
+ if(name==="home")renderHome();
+ if(name==="progress")renderProgress();
+}
+document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.view)));
+function completedKey(u,mode){return String(u)+":"+mode}
+function renderHome(){
+ refreshDay();
+ document.getElementById("topXp").textContent=state.xp+" XP";
+ document.getElementById("topStreak").textContent=state.streak;
+ document.getElementById("todayXp").textContent=state.todayXp||0;
+ document.getElementById("dailyFill").style.width=Math.min(100,(state.todayXp||0)/30*100)+"%";
+ document.getElementById("homeWords").textContent=state.learned.length;
+ document.getElementById("homeLessons").textContent=state.completed.length;
+ document.getElementById("homeAccuracy").textContent=state.answers?Math.round(state.correct/state.answers*100)+"%":"—";
+ document.getElementById("homeStreak").textContent=state.streak;
+ const slot=document.getElementById("homeUnits");
+ slot.innerHTML=Object.entries(UNITS).map(([u,d])=>`<div class="unit-card" data-num="${u}"><span class="uniticon">${d.icon}</span><div class="eyebrow">UNIT ${u}</div><h3>${esc(d.title)}</h3><p class="small">${esc(d.desc)}</p><div class="unit-meta"><span class="tag">${VOCAB.filter(v=>v.unit==u).length} слов</span><span class="tag">${ORAL.filter(q=>q.unit==u).length} speaking prompts</span></div><button class="btn secondary full" onclick="startLesson(${u},'words')">Продолжить →</button></div>`).join("");
+}
+function renderPath(){
+ const root=document.getElementById("pathUnits");
+ root.innerHTML=Object.entries(UNITS).map(([u,d])=>{
+  const nodes=LESSONS.map(l=>{const done=state.completed.includes(completedKey(u,l.mode));return `<div class="lesson-node"><div class="node-icon">${l.icon}</div><div class="node-content"><b>${l.title}</b><small>${l.sub}</small></div><button class="btn tiny secondary" onclick="launchPath(${u},'${l.mode}')">${done?"Повторить":"Начать"}</button><div class="node-check ${done?"done":""}">${done?"✓":"·"}</div></div>`}).join("");
+  const unitProgress=LESSONS.filter(l=>state.completed.includes(completedKey(u,l.mode))).length;
+  return `<div class="panel"><div class="daily-row" style="align-items:flex-start"><div class="daily-icon">${d.icon}</div><div class="daily-grow"><div class="eyebrow">UNIT ${u} · ${unitProgress}/4 уроков</div><h2>${esc(d.title)}</h2><p style="margin-bottom:7px">${esc(d.desc)}</p><div class="progress-track"><div class="progress-fill" style="width:${unitProgress/4*100}%"></div></div></div><div class="tag green">${unitProgress===4?"COMPLETED":"IN PROGRESS"}</div></div><div class="lesson-list" style="margin-top:17px">${nodes}</div></div>`;
+ }).join("");
+}
+function launchPath(u,mode){startLesson(u,mode)}
+function speak(text){
+ try{
+  if(!("speechSynthesis" in window)){toast("Озвучивание не поддерживается этим браузером.");return}
+  speechSynthesis.cancel();const utter=new SpeechSynthesisUtterance(text);utter.lang="en-GB";utter.rate=.84;
+  const voices=speechSynthesis.getVoices();const en=voices.find(v=>/^en-GB/i.test(v.lang))||voices.find(v=>/^en/i.test(v.lang));if(en)utter.voice=en;
+  speechSynthesis.speak(utter);
+ }catch(e){toast("Не удалось включить озвучивание.")}
+}
+function toast(message){
+ let el=document.getElementById("toast");if(!el){el=document.createElement("div");el.id="toast";el.style.cssText="position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:100;background:#e9f6db;color:#182519;padding:12px 17px;border-radius:13px;font-weight:850;box-shadow:0 8px 30px #0005;max-width:calc(100% - 25px);text-align:center";document.body.appendChild(el)}
+ el.textContent=message;el.style.display="block";clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>el.style.display="none",2600);
+}
+function toggleFavorite(en){
+ if(state.favorites.includes(en))state.favorites=state.favorites.filter(x=>x!==en);else state.favorites.push(en);
+ saveState();renderWords();
+}
+function markLearned(en){if(!state.learned.includes(en))state.learned.push(en);saveState();renderWords()}
+function currentUnitFilter(){const val=document.getElementById("wordUnit")?.value||"4";if(val==="all"||val==="fav")return val;return Number(val)}
+function toggleWordTranslation(id,btn){const el=document.getElementById("ru-"+id);if(!el)return;el.hidden=!el.hidden;btn.textContent=el.hidden?"👁":"🙈";}
+function renderWords(){
+ if(!document.getElementById("wordGrid"))return;
+ const query=(document.getElementById("wordSearch")?.value||"").toLowerCase().trim();
+ const unit=document.getElementById("wordUnit")?.value||"all";
+ const cat=document.getElementById("wordCategory")?.value||"all";
+ let list=VOCAB.filter(v=>(unit==="all"||(unit==="fav"?state.favorites.includes(v.en):String(v.unit)===unit))&&(cat==="all"||v.category===cat)&&(!query||(v.en+" "+v.ru+" "+v.ipa).toLowerCase().includes(query)));
+ document.getElementById("wordCountLabel").textContent=`Найдено: ${list.length} слов`;
+ if(!list.length){document.getElementById("wordGrid").innerHTML='<div class="empty" style="grid-column:1/-1">Ничего не найдено. Измени запрос или фильтр.</div>';return}
+ document.getElementById("wordGrid").innerHTML=list.map(v=>`<article class="word-card"><div class="eyebrow">UNIT ${v.unit} · ${esc(v.category==="verb"?"VERB":v.category==="adjective"?"ADJECTIVE":"NOUN / PHRASE")}</div><div class="word-en">${esc(v.en)}</div><div class="word-ru" id="ru-${safeId(v.en)}">${esc(v.ru)}</div><div class="word-ipa">${esc(v.ipa)}</div><div class="word-actions"><button class="icon-btn" title="Услышать произношение" onclick="speak('${jsq(v.en)}')">🔊</button><button class="icon-btn" title="Скрыть или показать перевод" onclick="toggleWordTranslation('${safeId(v.en)}',this)">🙈</button><button class="icon-btn ${state.favorites.includes(v.en)?"fav":""}" title="Избранное" onclick="toggleFavorite('${jsq(v.en)}')">★</button><button class="icon-btn" title="Отметить выученным" onclick="markLearned('${jsq(v.en)}')">${state.learned.includes(v.en)?"✓":"✓"}</button></div></article>`).join("");
+}
+function safeId(s){return "w"+Array.from(s).map(c=>c.charCodeAt(0).toString(16)).join("")}
+function jsq(s){return String(s).replace(/\\/g,"\\\\").replace(/'/g,"\\'")}
+["wordSearch","wordUnit","wordCategory"].forEach(id=>document.getElementById(id)?.addEventListener("input",renderWords));
+["wordUnit","wordCategory"].forEach(id=>document.getElementById(id)?.addEventListener("change",renderWords));
+
+function renderOral(){
+ const q=(document.getElementById("oralSearch")?.value||"").toLowerCase().trim();
+ const u=document.getElementById("oralUnit")?.value||"all";
+ const topic=document.getElementById("oralTopic")?.value||"all";
+ let list=ORAL.filter(x=>(u==="all"||String(x.unit)===u)&&(topic==="all"||x.topic===topic)&&(!q||(x.q+" "+x.a+" "+x.topic).toLowerCase().includes(q)));
+ const topics=[...new Set(ORAL.filter(x=>u==="all"||String(x.unit)===u).map(x=>x.topic))];
+ const sel=document.getElementById("oralTopic");
+ const current=sel.value;
+ sel.innerHTML='<option value="all">Все темы</option>'+topics.map(t=>`<option value="${esc(t)}">${esc(t)}</option>`).join("");
+ if(topics.includes(current))sel.value=current;
+ const offset=ORAL.indexOf(list[0]);
+ document.getElementById("oralList").innerHTML=list.length?list.map((x,i)=>`<article class="oral-card"><div class="oral-top"><div class="oral-num">${ORAL.indexOf(x)+1}</div><div class="oral-q">${esc(x.q)}<div style="margin-top:7px;display:flex;gap:6px;flex-wrap:wrap"><span class="tag">UNIT ${x.unit}</span><span class="tag">${esc(x.topic)}</span>${x.verify?'<span class="tag" style="color:var(--yellow)">Сверить с видео</span>':""}</div></div><button class="icon-btn" onclick="speak('${jsq(x.q)}')" title="Озвучить вопрос">🔊</button></div><div class="actions" style="margin-top:12px"><button class="btn tiny secondary" onclick="toggleSample(${ORAL.indexOf(x)})">Показать пример ответа</button><button class="btn tiny ghost" onclick="speak('${jsq(x.a)}')">🔊 Слушать ответ</button></div><div class="sample" id="sample-${ORAL.indexOf(x)}" hidden><span class="small">SAMPLE ANSWER · пример для тренировки</span>${esc(x.a)}${x.verify?'<p class="small" style="margin:9px 0 0;color:var(--yellow)">Этот вопрос опирается на видео или отдельное задание. Пример — опора для речи, точные детали проверь в исходном материале.</p>':""}</div></article>`).join(""):'<div class="empty">Подходящих вопросов не найдено.</div>';
+}
+function toggleSample(i){const e=document.getElementById("sample-"+i);if(e)e.hidden=!e.hidden}
+document.getElementById("oralSearch")?.addEventListener("input",renderOral);
+document.getElementById("oralUnit")?.addEventListener("change",()=>{document.getElementById("oralTopic").value="all";renderOral()});
+document.getElementById("oralTopic")?.addEventListener("change",renderOral);
+
+function renderGrammar(){
+ const root=document.getElementById("grammarCards");
+ root.innerHTML=GRAMMAR.map((g,i)=>`<article class="grammar-card"><div class="g-icon">${["🔬","🌦️","💼"][i]}</div><div class="eyebrow">UNIT ${g.unit} · ${g.tag}</div><h2>${esc(g.title)}</h2><p>${esc(g.short)}</p><div class="formula">${esc(g.unit===4?"V-ing / V3":g.unit===5?"If + Present, Present / will + verb":"Subject + seems / is likely + to + V")}</div><div style="margin-bottom:16px">${g.body.slice(0,2).map(b=>`<div class="rule-block"><b>${esc(b[0])}</b><p>${esc(b[1])}</p></div>`).join("")}</div><button class="btn primary full" onclick="startLesson(${g.unit},'grammar')">Тренировать правило →</button></article>`).join("");
+}
+function updateStats(){
+ refreshDay();
+ document.getElementById("topXp").textContent=state.xp+" XP";
+ document.getElementById("topStreak").textContent=state.streak;
+}
+function renderProgress(){
+ document.getElementById("pXp").textContent=state.xp;
+ document.getElementById("pStreak").textContent=state.streak+" 🔥";
+ document.getElementById("pLessons").textContent=state.completed.length;
+ document.getElementById("pAccuracy").textContent=state.answers?Math.round(state.correct/state.answers*100)+"%":"—";
+ document.getElementById("completedList").innerHTML=state.completed.length?state.completed.map(k=>{const [u,m]=k.split(":");const l=LESSONS.find(x=>x.mode===m);return `<div class="lesson-node"><div class="node-icon">${l?.icon||"✓"}</div><div class="node-content"><b>${esc(UNITS[u]?.title||"Смешанная практика")} · ${esc(l?.title||m)}</b><small>Урок завершён</small></div><div class="node-check done">✓</div></div>`}).join(""):'<div class="empty">Пока нет завершённых уроков. Выбери первый урок на вкладке «Путь».</div>';
+ let mistakes=state.mistakes.map(s=>VOCAB.find(v=>v.en===s)).filter(Boolean);
+ document.getElementById("mistakeList").innerHTML=mistakes.length?mistakes.map(v=>`<span class="tag" style="display:inline-block;margin:4px">${esc(v.en)} — ${esc(v.ru)}</span>`).join(""):'Пока нет отмеченных сложных слов. Ошибки из тестов появятся здесь.';
+}
+function exportProgress(){
+ const payload={exportedAt:new Date().toISOString(),state};
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="english-sprint-progress.json";a.click();URL.revokeObjectURL(url);
+}
+function resetProgress(){
+ if(!confirm("Сбросить весь прогресс, серию и избранное на этом устройстве?"))return;
+ state=blankState();saveState();renderHome();renderPath();renderProgress();toast("Прогресс сброшен.");
+}
+
+let lesson={open:false,unit:4,mode:"words",items:[],index:0,hearts:5,correct:0,answered:0,current:null,locked:false,earned:0,ratings:[]};
+function startLesson(unit,mode){
+ lesson={open:true,unit:unit,mode:mode,items:[],index:0,hearts:5,correct:0,answered:0,current:null,locked:false,earned:0,ratings:[]};
+ if(mode==="words")lesson.items=buildWordItems(unit,10);
+ else if(mode==="grammar")lesson.items=buildGrammarItems(unit,unit==="all"?15:5);
+ else if(mode==="speaking")lesson.items=buildSpeakingItems(unit,5);
+ else if(mode==="challenge")lesson.items=buildChallengeItems(unit,12);
+ else if(mode==="mistakes")lesson.items=buildMistakeItems();
+ if(!lesson.items.length){toast("Пока нет заданий для этого режима.");return}
+ document.getElementById("lessonModal").classList.add("open");
+ document.body.style.overflow="hidden";
+ renderLessonStep();
+}
+function closeLesson(){
+ document.getElementById("lessonModal").classList.remove("open");
+ document.body.style.overflow="";
+ lesson.open=false;
+ renderHome();renderPath();renderProgress();
+}
+function buildWordItems(unit,n){
+ let list=unit==="all"?VOCAB:unit==="fav"?VOCAB.filter(v=>state.favorites.includes(v.en)):VOCAB.filter(v=>v.unit===Number(unit));
+ if(unit==="all")list=VOCAB;
+ list=shuffle(list);
+ const count=Math.min(n,list.length);
+ return list.slice(0,count).map((v,i)=>{
+  const input=i%4===3;
+  if(input)return {kind:"type",word:v,prompt:`Переведи на русский`,question:v.en,correctText:v.ru,why:`${v.en} — ${v.ru}.`, id:v.en};
+  const direction=i%2===0?"enru":"ruen";
+  const field=direction==="enru"?"en":"ru", answer=direction==="enru"?"ru":"en";
+  const correct=v[answer];
+  let distractors=shuffle(list.filter(w=>w.en!==v.en).map(w=>w[answer]));
+  if(distractors.length<3)distractors=shuffle(VOCAB.filter(w=>w.en!==v.en).map(w=>w[answer]));
+  const opts=shuffle([correct,...distractors.filter(x=>x!==correct).slice(0,3)]);
+  return {kind:"choice",word:v,prompt:direction==="enru"?"Выбери перевод":"Выбери английский вариант",question:v[field],options:opts,correctText:correct,correct:opts.indexOf(correct),why:`${v.en} — ${v.ru}.`,id:v.en};
+ });
+}
+function buildGrammarItems(unit,n){
+ let list=unit==="all"?GRAMMAR.flatMap(g=>g.practice.map(p=>({...p,unit:g.unit,why:p.why,grammarTitle:g.title}))):GRAMMAR.find(g=>g.unit===Number(unit))?.practice.map(p=>({...p,unit:g.unit,grammarTitle:g.title}))||[];
+ return sample(list,n).map(p=>({kind:"choice",question:p.q,prompt:p.grammarTitle,options:p.opts,correct:p.correct,correctText:p.opts[p.correct],why:p.why,id:"g:"+p.q,grammar:true,unit:p.unit}));
+}
+function buildSpeakingItems(unit,n){
+ let list=unit==="all"?ORAL:ORAL.filter(q=>q.unit===Number(unit));
+ return sample(list,n).map(q=>({kind:"speak",question:q.q,answer:q.a,verify:q.verify,topic:q.topic,id:"q:"+q.q,unit:q.unit}));
+}
+function buildChallengeItems(unit,n){
+ const u=unit==="all"?[4,5,6]:[Number(unit)];
+ let words=buildWordItems(unit,Math.ceil(n*.65));
+ let grams=buildGrammarItems(unit,Math.ceil(n*.35));
+ if(!grams.length)grams=buildGrammarItems("all",Math.ceil(n*.35));
+ return shuffle([...words,...grams]).slice(0,n);
+}
+function buildMistakeItems(){
+ const words=state.mistakes.map(en=>VOCAB.find(v=>v.en===en)).filter(Boolean);
+ if(!words.length){toast("Пока нет сохранённых ошибок — пройди тест и вернись сюда.");return []}
+ return words.map((v,i)=>({kind:"choice",word:v,prompt:"Повтор ошибок · выбери перевод",question:v.en,options:shuffle([v.ru,...sample(VOCAB.filter(x=>x.en!==v.en),3).map(x=>x.ru)]),correctText:v.ru,id:v.en,why:`${v.en} — ${v.ru}.`})).map(it=>({...it,correct:it.options.indexOf(it.correctText)}));
+}
+function startMistakeReview(){startLesson("all","mistakes")}
+function renderLessonStep(){
+ const body=document.getElementById("lessonBody");
+ if(lesson.index>=lesson.items.length){finishLesson();return}
+ const item=lesson.items[lesson.index];lesson.current=item;lesson.locked=false;
+ document.getElementById("lessonFill").style.width=(lesson.index/lesson.items.length*100)+"%";
+ document.getElementById("lessonStep").textContent=`Вопрос ${lesson.index+1} из ${lesson.items.length}`;
+ document.getElementById("heartsCount").textContent=lesson.hearts;
+ let html="";
+ if(item.kind==="speak"){
+  html=`<div class="lesson-kicker">SPEAKING · ${esc(item.topic||"Speaking")}</div><h2 id="lessonTitle">Скажи ответ своими словами</h2><div class="lesson-question" style="font-size:clamp(20px,3.5vw,28px)">${esc(item.question)}</div><button class="btn secondary tiny" onclick="speak('${jsq(item.question)}')">🔊 Прослушать вопрос</button><div class="speaking-answer" id="speakingAnswer"><div class="sample"><span class="small">SAMPLE ANSWER</span>${esc(item.answer)}${item.verify?'<p class="small" style="margin:8px 0 0;color:var(--yellow)">Вопрос связан с видео/заданием: проверь точные детали в исходном материале.</p>':""}</div><button class="btn tiny secondary" style="margin-top:8px" onclick="speak('${jsq(item.answer)}')">🔊 Прослушать ответ</button></div><div class="self-rate"><button class="btn secondary" onclick="rateSpeaking(false)">↻ Нужно повторить</button><button class="btn primary" onclick="rateSpeaking(true)">✓ Смогу ответить</button></div><div class="lesson-footer"><span class="small">Не обязательно учить дословно — запомни 2–3 ключевые идеи.</span><button class="btn tiny ghost" onclick="revealSpeaking()">Показать пример</button></div>`;
+ }else{
+  html=`<div class="lesson-kicker">${lesson.mode==="grammar"?"GRAMMAR LAB":lesson.mode==="challenge"?"UNIT CHALLENGE":lesson.mode==="mistakes"?"MISTAKE REVIEW":"WORD QUEST"} · ${UNITS[item.unit||lesson.unit]?.short||unitName(lesson.unit)}</div><h2 id="lessonTitle">${esc(item.prompt||"Выбери ответ")}</h2><div class="lesson-question">${esc(item.question)}</div>`;
+  if(item.kind==="type"){
+   html+=`<div class="type-answer"><input id="typedAnswer" class="field" placeholder="Напиши перевод…" autocomplete="off" autocapitalize="sentences"><button class="btn primary" onclick="checkTyped()">Проверить</button></div><div class="small" style="margin-top:9px">Можно написать любой один из переводов, указанных в словаре.</div>`;
+  }else{
+   html+=`<div class="options">${item.options.map((op,i)=>`<button class="option" data-op="${i}" onclick="chooseOption(${i})">${esc(op)}</button>`).join("")}</div>`;
+  }
+  html+=`<div class="feedback" id="feedback"><h3></h3><p></p></div><div class="lesson-footer"><span class="small" id="lessonHint">Выбери правильный ответ</span><button class="btn primary" id="nextBtn" onclick="nextLessonStep()" disabled>Дальше →</button></div>`;
+ }
+ body.innerHTML=html;
+ if(item.kind==="type"){const inp=document.getElementById("typedAnswer");inp?.addEventListener("keydown",e=>{if(e.key==="Enter")checkTyped()});inp?.focus({preventScroll:true})}
+}
+function revealSpeaking(){document.getElementById("speakingAnswer")?.classList.add("show")}
+function rateSpeaking(gotIt){
+ if(lesson.locked)return;lesson.locked=true;
+ lesson.answered++;
+ state.answers++;
+ if(gotIt){lesson.correct++;lesson.earned+=5;state.correct++}else{lesson.hearts=Math.max(0,lesson.hearts-1);lesson.ratings.push("review")}
+ const item=lesson.current;
+ if(!gotIt&&item.kind==="speak"){ /* self-reported difficult prompt */ }
+ const body=document.getElementById("lessonBody");
+ const buttons=body.querySelectorAll(".self-rate button");buttons.forEach(b=>b.disabled=true);
+ const f=document.createElement("div");f.className="feedback show "+(gotIt?"good":"bad");f.innerHTML=`<h3>${gotIt?"Отлично! +5 XP":"Сохрани вопрос для повторения"}</h3><p>${gotIt?"Продолжай отвечать своими словами.":"Прослушай пример и попробуй ответить ещё раз позже."}</p>`;
+ body.querySelector(".self-rate").after(f);
+ const foot=body.querySelector(".lesson-footer");
+ foot.innerHTML=`<span class="small">${lesson.index+1} / ${lesson.items.length}</span><button class="btn primary" onclick="nextLessonStep()">${lesson.index+1===lesson.items.length?"Завершить":"Следующий вопрос →"}</button>`;
+}
+function chooseOption(idx){
+ if(lesson.locked)return;
+ const item=lesson.current;const buttons=[...document.querySelectorAll(".option")];
+ lesson.locked=true;lesson.answered++;state.answers++;
+ const selected=item.options[idx];const correct=item.correct!==undefined?item.correctText||item.options[item.correct]:item.correctText;
+ const isCorrect=norm(selected)===norm(correct);
+ buttons.forEach((b,i)=>{b.disabled=true;if(norm(item.options[i])===norm(correct))b.classList.add("correct");if(i===idx&&!isCorrect)b.classList.add("wrong")});
+ applyAnswerResult(item,isCorrect);
+ showFeedback(isCorrect,item.why||"");
+}
+function checkTyped(){
+ if(lesson.locked)return;
+ const inp=document.getElementById("typedAnswer");if(!inp)return;
+ const item=lesson.current;const val=norm(inp.value);
+ if(!val){toast("Сначала введи ответ.");return}
+ const expected=item.word.ru.split(/[;\/]/).map(x=>norm(x));
+ const isCorrect=expected.some(x=>x===val)||norm(item.word.ru)===val;
+ lesson.locked=true;lesson.answered++;state.answers++;
+ inp.disabled=true;document.querySelector(".type-answer .btn").disabled=true;
+ applyAnswerResult(item,isCorrect);showFeedback(isCorrect,item.why||"");
+}
+function applyAnswerResult(item,isCorrect){
+ if(isCorrect){lesson.correct++;lesson.earned+=5;state.correct++;if(item.word&&!state.learned.includes(item.word.en))state.learned.push(item.word.en);state.mistakes=state.mistakes.filter(x=>x!==item.word?.en)}
+ else{lesson.hearts=Math.max(0,lesson.hearts-1);if(item.word&&!state.mistakes.includes(item.word.en))state.mistakes.push(item.word.en)}
+ saveState();document.getElementById("heartsCount").textContent=lesson.hearts;
+}
+function showFeedback(good,why){
+ const box=document.getElementById("feedback");if(!box)return;
+ box.className="feedback show "+(good?"good":"bad");
+ box.querySelector("h3").textContent=good?"Правильно! +5 XP":"Пока нет — вот верный ответ";
+ box.querySelector("p").textContent=why;
+ document.getElementById("nextBtn").disabled=false;
+ document.getElementById("lessonHint").textContent=good?"Отличная работа":"Запомни правильный вариант и двигайся дальше";
+}
+function nextLessonStep(){if(!lesson.locked)return;lesson.index++;renderLessonStep()}
+function finishLesson(){
+ const total=lesson.items.length;
+ const bonus=lesson.correct>=Math.ceil(total*.7)?10:0;
+ const earned=lesson.earned+bonus;
+ if(earned>0)awardXP(earned);
+ let key=completedKey(lesson.unit,lesson.mode);
+ if(!state.completed.includes(key))state.completed.push(key);
+ state.quizRuns++;state.history.unshift({date:dateKey(),unit:lesson.unit,mode:lesson.mode,correct:lesson.correct,total:lesson.answered,xp:earned});
+ state.history=state.history.slice(0,30);saveState();
+ document.getElementById("lessonFill").style.width="100%";
+ document.getElementById("lessonStep").textContent="Урок завершён";
+ document.getElementById("heartsCount").textContent=lesson.hearts;
+ document.getElementById("lessonBody").innerHTML=`<div class="lesson-finish"><div class="finish-badge">${lesson.correct>=Math.ceil(total*.7)?"🏆":"🌱"}</div><div class="eyebrow">LESSON COMPLETE</div><h2>${lesson.correct>=Math.ceil(total*.7)?"Отличная работа!":"Хороший старт!"}</h2><p>${lesson.correct} из ${lesson.answered} заданий выполнено уверенно. Не переживай из-за ошибок — они показывают, что повторить.</p><div class="xp-award">+${earned} XP</div><div class="progress-track" style="max-width:360px;margin:0 auto 10px"><div class="progress-fill" style="width:${lesson.answered?lesson.correct/lesson.answered*100:0}%"></div></div><p class="small">Точность: ${lesson.answered?Math.round(lesson.correct/lesson.answered*100):0}% · Серия: ${state.streak} 🔥</p><div class="actions" style="justify-content:center"><button class="btn secondary" onclick="closeLesson()">На главную</button><button class="btn primary" onclick="closeLesson();showView('path')">Следующий урок →</button></div></div>`;
+}
+document.getElementById("lessonModal").addEventListener("click",e=>{if(e.target.id==="lessonModal")closeLesson()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&lesson.open)closeLesson()});
+
+renderHome();renderPath();renderWords();renderOral();renderGrammar();renderProgress();updateStats();
+</script>
+</body>
+</html>
